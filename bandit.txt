@@ -1,0 +1,521 @@
+bandit0:
+ssh bandit0@bandit.labs.overthewire.org -p2220
+cat readme
+    boJ9jbbUNNfktd78OOpsqOltutMc3MY1
+    
+    
+bandit1:
+cat ./-
+    CV1DtqXWVFXTvM2F0k09SHz0YwRINYA9
+    
+    
+bandit2:
+cat "spaces in this filename"
+    UmHadQclWmgdLOKQ3YNgjWxGoRMb5luK
+    
+    
+bandit3:
+cd inhere
+cat .hidden
+    pIwrPrtPN36QITSp3EQaw936yaFoFgAB
+    
+    
+bandit4:
+cd inhere
+for fn in $(ls); do echo -e "$fn\n"; cat ./$fn; echo -e "\n"; done
+    koReBOKuIDDepwhWk7jZC0RTdopnAYKh
+    
+    
+bandit5:
+mkdir /tmp/bandit5/
+cd /tmp/bandit5/
+vim bandit5.py
+
+import os
+import sys
+import re
+for root, dirs, files in os.walk(sys.argv[1]):
+    for file in files:
+        file_path = os.path.join(root,file)
+        fsize = os.path.getsize(file_path)
+        if fsize == 1033 and not os.access(file_path, os.X_OK):
+            print(file_path)
+            with open(file_path) as f:
+                fcontents = f.read().rstrip()
+                if re.search('^[a-zA-Z0-9]+$', fcontents):
+                    print(fcontents)
+
+for i in $(seq -f "%02g" 0 19); do dn=/home/bandit5/inhere/maybehere$i; python /tmp/bandit5/bandit5.py $dn; done
+    /home/bandit5/inhere/maybehere07/.file2
+    DXjZPULLxYr17uwoI01bNLQbtFemEgo7
+    
+    
+bandit6:
+find / -user bandit7 -group bandit6
+    /var/lib/dpkg/info/bandit7.password
+cat /var/lib/dpkg/info/bandit7.password
+    HKBPTKQnIay4Fw76bEy8PVxKEDQRKTzs
+
+
+bandit7:
+grep millionth data.txt
+    cvX2JJa4CFALtqS87jk27qwqGhBM9plV
+
+
+bandit8:
+sort data.txt | uniq -u
+    UsvVyFSfZZWbi6wgC7dAFyFuR6jQQUhR
+
+
+bandit9:
+strings data.txt | grep -E "[=]+[a-zA-Z0-9 ]+"
+    truKLdjsbJ5g7yyJ2X2R0o3a5HQJFuLk
+
+
+bandit10:
+cat data.txt | base64 -d
+    IFukwKGsFW8MOq3IRFqrxE1hxTNEbUPR
+
+
+bandit11:
+python -c 'import codecs; print(codecs.encode(open("data.txt").read(), "rot_13"))'
+    5Te8Y4drgCRfCx8ugdwuEX8KFC6k2EUu
+
+
+
+bandit12:
+mkdir /tmp/bandit12/
+cp data.txt /tmp/bandit12/
+xxd -r data.txt > data2
+file data2
+    data2: gzip compressed data, was "data2.bin", last modified: Thu May  7 18:14:30 2020, max compression, from Unix
+mv data2 data2.gz
+gzip -d data2.gz
+file data2
+    data2: bzip2 compressed data, block size = 900k
+mv data2 data2.bz2
+bzip2 -d data2.bz2
+file data2
+    data2: gzip compressed data, was "data4.bin", last modified: Thu May  7 18:14:30 2020, max compression, from Unix
+mv data2 data2.gz
+gzip -d data2.gz
+file data2
+    data2: POSIX tar archive (GNU)
+mv data2 data2.tar
+tar xvf data2.tar
+file data5.bin
+    data5.bin: POSIX tar archive (GNU)
+mv data5.bin data5.tar
+tar xvf data5.tar
+file data6.bin
+    data6.bin: bzip2 compressed data, block size = 900k
+mv data6.bin data6.bz2
+bzip2 -d data6.bz2
+file data6
+    data6: POSIX tar archive (GNU)
+mv data6 data6.tar
+tar xvf data6.tar
+file data8.bin
+    data8.bin: gzip compressed data, was "data9.bin", last modified: Thu May  7 18:14:30 2020, max compression, from Unix
+mv data8.bin data8.gz
+gzip -d data8.gz
+file data8
+    data8: ASCII text
+cat data8
+    8ZjyCRiBWFYkneahHwxCv3wb2a1ORpYL
+
+
+bandit13:
+ssh -i sshkey.private bandit14@localhost
+cat /etc/bandit_pass/bandit14
+    4wcYUJFw0k0XLShlDzztnTBHiqxU3b3e
+
+
+bandit14:
+nc localhost 30000
+[Enter bandit14 password][ENTER]
+    BfMYroe26WYalil77FoDi9qh59eK5xNr
+
+
+bandit15:
+openssl s_client -connect localhost:30001
+[Enter bandit15 password][ENTER]
+    cluFn7wTiGryunymYOu4RcffSxQluehd
+
+
+bandit16:
+nmap -p31000-32000 -v -A -T4 localhost
+    31790/tcp open  ssl/unknown
+    | fingerprint-strings: 
+    |   FourOhFourRequest, GenericLines, GetRequest, HTTPOptions, Help, Kerberos, LDAPSearchReq, LPDString, RTSPRequest, SIPOptions, SSLSessionReq, TLSSessionReq: 
+    |_    Wrong! Please enter the correct current password
+    | ssl-cert: Subject: commonName=localhost
+    | Subject Alternative Name: DNS:localhost
+    | Issuer: commonName=localhost
+    | Public Key type: rsa
+    | Public Key bits: 1024
+    | Signature Algorithm: sha1WithRSAEncryption
+    | Not valid before: 2020-12-03T12:25:02
+    | Not valid after:  2021-12-03T12:25:02
+    | MD5:   b223 5bbc 9f9d 59de 8943 24a7 7b2c 0d00
+    |_SHA-1: eb39 1296 ca60 48a7 a479 ed8c 9183 0602 3b6a fdd2
+    |_ssl-date: TLS randomness does not represent time
+openssl s_client -connect localhost:31790
+    -----BEGIN RSA PRIVATE KEY-----
+    MIIEogIBAAKCAQEAvmOkuifmMg6HL2YPIOjon6iWfbp7c3jx34YkYWqUH57SUdyJ
+    imZzeyGC0gtZPGujUSxiJSWI/oTqexh+cAMTSMlOJf7+BrJObArnxd9Y7YT2bRPQ
+    Ja6Lzb558YW3FZl87ORiO+rW4LCDCNd2lUvLE/GL2GWyuKN0K5iCd5TbtJzEkQTu
+    DSt2mcNn4rhAL+JFr56o4T6z8WWAW18BR6yGrMq7Q/kALHYW3OekePQAzL0VUYbW
+    JGTi65CxbCnzc/w4+mqQyvmzpWtMAzJTzAzQxNbkR2MBGySxDLrjg0LWN6sK7wNX
+    x0YVztz/zbIkPjfkU1jHS+9EbVNj+D1XFOJuaQIDAQABAoIBABagpxpM1aoLWfvD
+    KHcj10nqcoBc4oE11aFYQwik7xfW+24pRNuDE6SFthOar69jp5RlLwD1NhPx3iBl
+    J9nOM8OJ0VToum43UOS8YxF8WwhXriYGnc1sskbwpXOUDc9uX4+UESzH22P29ovd
+    d8WErY0gPxun8pbJLmxkAtWNhpMvfe0050vk9TL5wqbu9AlbssgTcCXkMQnPw9nC
+    YNN6DDP2lbcBrvgT9YCNL6C+ZKufD52yOQ9qOkwFTEQpjtF4uNtJom+asvlpmS8A
+    vLY9r60wYSvmZhNqBUrj7lyCtXMIu1kkd4w7F77k+DjHoAXyxcUp1DGL51sOmama
+    +TOWWgECgYEA8JtPxP0GRJ+IQkX262jM3dEIkza8ky5moIwUqYdsx0NxHgRRhORT
+    8c8hAuRBb2G82so8vUHk/fur85OEfc9TncnCY2crpoqsghifKLxrLgtT+qDpfZnx
+    SatLdt8GfQ85yA7hnWWJ2MxF3NaeSDm75Lsm+tBbAiyc9P2jGRNtMSkCgYEAypHd
+    HCctNi/FwjulhttFx/rHYKhLidZDFYeiE/v45bN4yFm8x7R/b0iE7KaszX+Exdvt
+    SghaTdcG0Knyw1bpJVyusavPzpaJMjdJ6tcFhVAbAjm7enCIvGCSx+X3l5SiWg0A
+    R57hJglezIiVjv3aGwHwvlZvtszK6zV6oXFAu0ECgYAbjo46T4hyP5tJi93V5HDi
+    Ttiek7xRVxUl+iU7rWkGAXFpMLFteQEsRr7PJ/lemmEY5eTDAFMLy9FL2m9oQWCg
+    R8VdwSk8r9FGLS+9aKcV5PI/WEKlwgXinB3OhYimtiG2Cg5JCqIZFHxD6MjEGOiu
+    L8ktHMPvodBwNsSBULpG0QKBgBAplTfC1HOnWiMGOU3KPwYWt0O6CdTkmJOmL8Ni
+    blh9elyZ9FsGxsgtRBXRsqXuz7wtsQAgLHxbdLq/ZJQ7YfzOKU4ZxEnabvXnvWkU
+    YOdjHdSOoKvDQNWu6ucyLRAWFuISeXw9a/9p7ftpxm0TSgyvmfLF2MIAEwyzRqaM
+    77pBAoGAMmjmIJdjp+Ez8duyn3ieo36yrttF5NSsJLAbxFpdlc1gvtGCWW+9Cq0b
+    dxviW8+TFVEBl1O4f7HVm6EpTscdDxU+bCXWkfjuRb7Dy9GOtt9JPsX8MBTakzh3
+    vBgsyi/sN3RqRBcGU40fOoZyfAMT8s1m/uYv52O6IgeuZ/ujbjY=
+    -----END RSA PRIVATE KEY-----
+Save private key to a file called bandit17
+
+bandit17:
+ssl -i bandit17 bandit17@bandit.labs.overthewire.org -p2220
+bandit17@bandit:~$ comm -1 -3 passwords.old passwords.new 
+    kfBf3eYk5BPBRzwjqutbbfE887SVc5Yd
+
+
+
+bandit18:
+ssl bandit18@bandit.labs.overthewire.org -p2220 "cat readme"
+    IueksS7Ubh8G3DCwVzrTd8rAVOwq3M5x
+
+
+
+bandit19:
+./bandit20-do cat /etc/bandit_pass/bandit20
+    GbKksEFF4yrVs6il55v6gwY5aVje5f0j
+
+
+bandit20:
+screen
+    nc -lvp 9999 < /etc/bandit_pass/bandit20
+    cntrl+a-d
+./suconnect 9999
+    [bandit20 password][ENTER]
+screen -r [screen name]
+    gE269g2h3mw3pwgrj0Ha9Uoqen1c9DGr
+
+
+
+bandit21:
+cat /etc/cron.d/cronjob_bandit22
+    @reboot bandit22 /usr/bin/cronjob_bandit22.sh &> /dev/null
+    * * * * * bandit22 /usr/bin/cronjob_bandit22.sh &> /dev/null
+cat /usr/bin/cronjob_bandit22.sh 
+    #!/bin/bash
+    chmod 644 /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
+    cat /etc/bandit_pass/bandit22 > /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
+cat /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
+    Yk7owGAcWjwMVRwrTesJEwB7WVOiILLI
+
+
+
+bandit22:
+cat /etc/cron.d/cronjob_bandit23
+    @reboot bandit23 /usr/bin/cronjob_bandit23.sh  &> /dev/null
+    * * * * * bandit23 /usr/bin/cronjob_bandit23.sh  &> /dev/null
+cat /usr/bin/cronjob_bandit23.sh 
+    #!/bin/bash
+
+    myname=$(whoami)
+    mytarget=$(echo I am user $myname | md5sum | cut -d ' ' -f 1)
+
+    echo "Copying passwordfile /etc/bandit_pass/$myname to /tmp/$mytarget"
+
+    cat /etc/bandit_pass/$myname > /tmp/$mytarget
+echo I am user bandit23 | md5sum | cut -d ' ' -f 1
+    8ca319486bfbbc3663ea0fbe81326349
+cat /tmp/8ca319486bfbbc3663ea0fbe81326349
+    jc1udXuA1tiHqjIsL8yaapX5XIAI6i0n
+
+
+
+bandit23:
+cat /etc/cron.d/cronjob_bandit24
+    @reboot bandit24 /usr/bin/cronjob_bandit24.sh &> /dev/null
+    * * * * * bandit24 /usr/bin/cronjob_bandit24.sh &> /dev/null
+cat /usr/bin/cronjob_bandit24.sh 
+    #!/bin/bash
+
+    myname=$(whoami)
+
+    cd /var/spool/$myname
+    echo "Executing and deleting all scripts in /var/spool/$myname:"
+    for i in * .*;
+    do
+        if [ "$i" != "." -a "$i" != ".." ];
+        then
+            echo "Handling $i"
+            owner="$(stat --format "%U" ./$i)"
+            if [ "${owner}" = "bandit23" ]; then
+                timeout -s 9 60 ./$i
+            fi
+            rm -f ./$i
+        fi
+    done
+mkdir /tmp/bandit23/
+cd /tmp/bandit23/
+vim bandit23.sh
+    #!/bin/sh
+    cat /etc/bandit_pass/bandit24 > /tmp/bandit23/bandit24_pass
+chmod 777 bandit.sh
+chmod 777 /tmp/bandit23/
+cp bandit23.sh /var/spool/bandit24/
+cat bandit24_pass
+    UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ
+
+
+
+bandit24:
+for i in {0000..9999}; do echo UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ $i; done | nc localhost 30002
+    uNG9O58gUE7snukf3bvZ0rxhtnjzSGzG
+
+
+
+bandit25:
+cat /usr/bin/showtext
+    #!/bin/sh
+    export TERM=linux
+    more ~/text.txt
+    exit 0
+Minimize terminal, so that the more command can scroll
+Type v, so that vi starts up
+:e /etc/bandit_pass/bandit26
+    5czgV9L3Xx8JPOyRbXh6lQbmIOWvPT6Z
+
+
+
+bandit26:
+login to bandit26 with window minimized
+type v, so that vi starts up
+type set shell=/bin/sh
+type :!ls -la
+type :!./bandit27-do cat /etc/bandit_pass/bandit27
+    3ba3118a22e93127a4ed485be72ef5ea
+
+
+
+
+bandit27:
+git clone ssh://bandit27-git@localhost/home/bandit27-git/repo
+cd repo
+cat README
+    0ef186ac70e04ea33b4c1853d2526fa2
+
+
+
+bandit28:
+mkdir /tmp/bandit28/
+cd /tmp/bandit28/
+git clone ssh://bandit28-git@localhost/home/bandit28-git/repo
+cd repo
+cat README
+    # Bandit Notes
+    Some notes for level29 of bandit.
+
+    ## credentials
+
+    - username: bandit29
+    - password: xxxxxxxxxx
+git log
+    commit edd935d60906b33f0619605abd1689808ccdd5ee
+    Author: Morla Porla <morla@overthewire.org>
+    Date:   Thu May 7 20:14:49 2020 +0200
+
+        fix info leak
+
+    commit c086d11a00c0648d095d04c089786efef5e01264
+    Author: Morla Porla <morla@overthewire.org>
+    Date:   Thu May 7 20:14:49 2020 +0200
+
+        add missing data
+
+    commit de2ebe2d5fd1598cd547f4d56247e053be3fdc38
+    Author: Ben Dover <noone@overthewire.org>
+    Date:   Thu May 7 20:14:49 2020 +0200
+
+        initial commit of README.md
+git show c086d11a00c0648d095d04c089786efef5e01264
+    bbc96594b4e001778eee9975372716b2
+
+
+
+bandit29:
+mkdir /tmp/bandit29/
+cd /tmp/bandit29/
+git clone ssh://bandit29-git@localhost/home/bandit29-git/repo
+cd repo
+git log
+    commit 208f463b5b3992906eabf23c562eda3277fea912
+    Author: Ben Dover <noone@overthewire.org>
+    Date:   Thu May 7 20:14:51 2020 +0200
+
+        fix username
+
+    commit 18a6fd6d5ef7f0874bbdda2fa0d77b3b81fd63f7
+    Author: Ben Dover <noone@overthewire.org>
+    Date:   Thu May 7 20:14:51 2020 +0200
+
+        initial commit of README.md
+git show 208f463b5b3992906eabf23c562eda3277fea912
+    commit 208f463b5b3992906eabf23c562eda3277fea912
+    Author: Ben Dover <noone@overthewire.org>
+    Date:   Thu May 7 20:14:51 2020 +0200
+
+        fix username
+
+    diff --git a/README.md b/README.md
+    index 2da2f39..1af21d3 100644
+    --- a/README.md
+    +++ b/README.md
+    @@ -3,6 +3,6 @@ Some notes for bandit30 of bandit.
+     
+     ## credentials
+     
+    -- username: bandit29
+    +- username: bandit30
+     - password: <no passwords in production!>
+git branch -r
+      origin/HEAD -> origin/master
+      origin/dev
+      origin/master
+      origin/sploits-dev
+git checkout dev
+git log
+    commit bc833286fca18a3948aec989f7025e23ffc16c07
+    Author: Morla Porla <morla@overthewire.org>
+    Date:   Thu May 7 20:14:52 2020 +0200
+
+        add data needed for development
+
+    commit 8e6c203f885bd4cd77602f8b9a9ea479929ffa57
+    Author: Ben Dover <noone@overthewire.org>
+    Date:   Thu May 7 20:14:51 2020 +0200
+
+        add gif2ascii
+
+    commit 208f463b5b3992906eabf23c562eda3277fea912
+    Author: Ben Dover <noone@overthewire.org>
+    Date:   Thu May 7 20:14:51 2020 +0200
+
+        fix username
+
+    commit 18a6fd6d5ef7f0874bbdda2fa0d77b3b81fd63f7
+    Author: Ben Dover <noone@overthewire.org>
+    Date:   Thu May 7 20:14:51 2020 +0200
+
+        initial commit of README.md
+git show bc833286fca18a3948aec989f7025e23ffc16c07
+    commit bc833286fca18a3948aec989f7025e23ffc16c07
+    Author: Morla Porla <morla@overthewire.org>
+    Date:   Thu May 7 20:14:52 2020 +0200
+
+        add data needed for development
+
+    diff --git a/README.md b/README.md
+    index 1af21d3..39b87a8 100644
+    --- a/README.md
+    +++ b/README.md
+    @@ -4,5 +4,5 @@ Some notes for bandit30 of bandit.
+     ## credentials
+     
+     - username: bandit30
+    -- password: <no passwords in production!>
+    +- password: 5b90576bedb2cc04c86a9e924ce42faf
+
+        5b90576bedb2cc04c86a9e924ce42faf
+
+
+
+
+bandit30:
+mkdir /tmp/bandit30/
+cd /tmp/bandit30/
+git clone ssh://bandit30-git@localhost/home/bandit30-git/repo
+cd repro
+cat README.md
+    just an epmty file... muahaha
+git branch -r
+      origin/HEAD -> origin/master
+      origin/master
+git tag
+    secret
+git show secret
+    47e603bb428404d265f59c42920d81e5
+
+
+
+
+bandit31:
+mkdir /tmp/bandit31_
+cd /tmp/bandit31_
+git clone ssh://bandit31-git@localhost/home/bandit31-git/repo
+cd repo
+ls -la
+    total 20
+    drwxr-sr-x 3 bandit31 root 4096 Jan 13 04:01 .
+    drwxr-sr-x 3 bandit31 root 4096 Jan 13 04:01 ..
+    drwxr-sr-x 8 bandit31 root 4096 Jan 13 04:01 .git
+    -rw-r--r-- 1 bandit31 root    6 Jan 13 04:01 .gitignore
+    -rw-r--r-- 1 bandit31 root  147 Jan 13 04:01 README.md
+cat README.md 
+    This time your task is to push a file to the remote repository.
+    Details:
+        File name: key.txt
+        Content: 'May I come in?'
+        Branch: master
+echo May I come in? > key.txt
+git add key.txt -f
+git commit -m "Add key.txt"
+git push origin master
+    remote: .oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.
+    remote: 
+    remote: Well done! Here is the password for the next level:
+    remote: 56a9bf19c63d650ce78e6ec0354ee45e
+    remote: 
+    remote: .oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.
+
+    56a9bf19c63d650ce78e6ec0354ee45e
+
+
+
+bandit32:
+$0
+cat /etc/bandit_pass/bandit33
+    c9c3199ddf4121b10cf581a98d51caee
+    
+
+
+bandit33:
+    bandit33@bandit:~$ cat README.txt 
+    Congratulations on solving the last level of this game!
+
+    At this moment, there are no more levels to play in this game. However, we are constantly working
+    on new levels and will most likely expand this game with more levels soon.
+    Keep an eye out for an announcement on our usual communication channels!
+    In the meantime, you could play some of our other wargames.
+
+    If you have an idea for an awesome new level, please let us know!
+
