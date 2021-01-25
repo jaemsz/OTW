@@ -12,7 +12,7 @@ nc semtex.labs.overthewire.org 24000 > secret
 
 with open('secret', 'rb') as f:
     secrets = f.read()
-    secrets_filtered = [ch for i, ch in enumerate(secret_data) if % 2 == 0]
+    secrets_filtered = [ch for i, ch in enumerate(secret_data) if i % 2 == 0]
     with open('secret_elf', 'wb') as xf:
         secret_elf = ''.join(secrets_filtered)
 
