@@ -1,0 +1,89 @@
+https://overthewire.org/wargames/semtex/semtex0.html
+
+Semtex0:
+
+-- BEGIN CAPTURE DATA --
+
+nc semtex.labs.overthewire.org 24000 > secret
+
+-- END CAPTURE DATA --
+
+-- BEGIN SCRIPT [secret.py] --
+
+with open('secret', 'rb') as f:
+    secrets = f.read()
+    secrets_filtered = [ch for i, ch in enumerate(secret_data) if % 2 == 0]
+    with open('secret_elf', 'wb') as xf:
+        secret_elf = ''.join(secrets_filtered)
+
+-- END SCRIPT --
+
+-- BEGIN radare2 --
+
+│           0x08048364      55             push ebp
+│           0x08048365      89e5           mov ebp, esp
+│           0x08048367      57             push edi
+│           0x08048368      56             push esi
+│           0x08048369      81ec90000000   sub esp, 0x90
+│           0x0804836f      83e4f0         and esp, 0xfffffff0
+│           0x08048372      b800000000     mov eax, 0
+│           0x08048377      29c4           sub esp, eax
+│           0x08048379      8d7d98         lea edi, [var_68h]
+│           0x0804837c      be00850408     mov esi, str.JJJBW          ; 0x8048500 ; "JJJBW\xa7EF\"\xa7Or8#29j4fjw93jf9\"\xa7/Qj$5%j\xa7%\xa7aaAIonb\xa7sXlwakl4liZ3qsX09QAWO\xa7MGA3ioaqcgjrAJER"
+│           0x08048381      fc             cld
+│           0x08048382      b955000000     mov ecx, 0x55               ; 'U' ; 85
+│           0x08048387      f3a4           rep movsb byte es:[edi], byte ptr [esi]
+│           0x08048389      0fbe45e4       movsx eax, byte [var_1ch]
+│           0x0804838d      89442420       mov dword [var_20h], eax
+│           0x08048391      0fbe45d4       movsx eax, byte [var_2ch]
+│           0x08048395      8944241c       mov dword [var_sp_1ch], eax
+│           0x08048399      0fbe45c7       movsx eax, byte [var_39h]
+│           0x0804839d      89442418       mov dword [var_18h], eax
+│           0x080483a1      0fbe45bc       movsx eax, byte [var_44h]
+│           0x080483a5      89442414       mov dword [var_14h], eax
+│           0x080483a9      0fbe45ba       movsx eax, byte [var_46h]
+│           0x080483ad      89442410       mov dword [var_10h], eax
+│           0x080483b1      0fbe45a9       movsx eax, byte [var_57h]
+│           0x080483b5      8944240c       mov dword [var_ch], eax
+│           0x080483b9      0fbe45a5       movsx eax, byte [var_5bh]
+│           0x080483bd      89442408       mov dword [var_8h], eax
+│           0x080483c1      0fbe459b       movsx eax, byte [var_65h]
+│           0x080483c5      89442404       mov dword [var_4h], eax
+│           0x080483c9      c70424558504.  mov dword [esp], str._c_c_c_c_c_c_c_c ; [0x8048555:4]=0x63256325 ; "%c%c%c%c%c%c%c%c"
+│           0x080483d0      e8b3feffff     call fcn.08048288
+│           0x080483d5      8d65f8         lea esp, [var_bp_8h]
+│           0x080483d8      5e             pop esi
+│           0x080483d9      5f             pop edi
+│           0x080483da      5d             pop ebp
+└           0x080483db      c3             ret
+
+
+-- END radare2 --
+
+-- BEGIN pwndbg --
+
+Set breakpoint at 0x080483d0
+
+pwndbg> x/s $esp+4
+0xffffd184:     "B"
+pwndbg> x/s $esp+4+4
+0xffffd188:     "#"
+pwndbg> x/s $esp+4+4+4
+0xffffd18c:     "4"
+pwndbg> x/s $esp+4+4+4+4
+0xffffd190:     "j"
+pwndbg> x/s $esp+4+4+4+4+4
+0xffffd194:     "%"
+pwndbg> x/s $esp+4+4+4+4+4+4
+0xffffd198:     "X"
+pwndbg> x/s $esp+4+4+4+4+4+4+4
+0xffffd19c:     "X"
+pwndbg> x/s $esp+4+4+4+4+4+4+4+4
+0xffffd1a0:     "c"
+
+-- END pwndbg
+
+
+PASSWORD:   B#4j%XXc
+
+
