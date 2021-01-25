@@ -15,6 +15,7 @@ with open('secret', 'rb') as f:
     secrets_filtered = [ch for i, ch in enumerate(secret_data) if i % 2 == 0]
     with open('secret_elf', 'wb') as xf:
         secret_elf = ''.join(secrets_filtered)
+        xf.write(secret_elf)
 
 -- END SCRIPT --
 
